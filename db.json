@@ -1,0 +1,147 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "ljuba016",
+      "email": "aleksa@gmail.com",
+      "password": "ljuba016",
+      "role": "user"
+    },
+    {
+      "id": "2",
+      "username": "admin",
+      "email": "admin@admin.com",
+      "password": "admin123",
+      "role": "admin"
+    }
+  ],
+  "menu": [
+    {
+      "id": "1",
+      "name": "Espreso",
+      "description": "Jak crni espresso, pripremljen od sveže mlevene kafe.",
+      "price": 180,
+      "category": "pice",
+      "image": "/src/assets/espreso.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Kapucino",
+      "description": "Kafa sa penom od mleka, idealna za uživanje ujutru.",
+      "price": 220,
+      "category": "pice",
+      "image": "/src/assets/kapucino.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Makijato",
+      "description": "Kafa sa minimalno pene od mleka.",
+      "price": 200,
+      "category": "pice",
+      "image": "/src/assets/makijato.jpeg"
+    },
+    {
+      "id": "4",
+      "name": "Čaj od nane",
+      "description": "Topao biljni čaj od sveže mente, opuštajućeg ukusa.",
+      "price": 160,
+      "category": "pice",
+      "image": "/src/assets/caj.jpg"
+    },
+    {
+      "id": "5",
+      "name": "Cedevita",
+      "description": "Osvežavajući napitak sa ukusom narandže, limuna ili breskve.",
+      "price": 150,
+      "category": "pice",
+      "image": "/src/assets/cedevita.png"
+    },
+    {
+      "id": "6",
+      "name": "Coca Cola",
+      "description": "Svima dobro poznata kola, savrsen dodatak uz kafu.",
+      "price": 210,
+      "category": "pice",
+      "image": "/src/assets/cocacola.jpg"
+    },
+    {
+      "id": "7",
+      "name": "Kroasan",
+      "description": "Puterasni kroasan, hrskav spolja i mekan iznutra.",
+      "price": 250,
+      "category": "hrana",
+      "image": "/src/assets/kroasan.jpg"
+    },
+    {
+      "id": "8",
+      "name": "Cheesecake",
+      "description": "Kremasti kolač od sira sa prelivom od jagoda.",
+      "price": 420,
+      "category": "hrana",
+      "image": "/src/assets/cheesecake.jpg"
+    }
+  ],
+  "reservations": [
+    {
+      "id": "1",
+      "userId": "token-ljuba016",
+      "tableNumber": 2,
+      "date": "2025-10-10",
+      "time": "14:00",
+      "status": "pending",
+      "createdAt": "2025-08-21T13:20:20.035Z"
+    }
+  ],
+  "tables": [
+    {
+      "id": "1",
+      "tableNumber": 1,
+      "status": "not_reserved"
+    },
+    {
+      "id": "2",
+      "tableNumber": 2,
+      "status": "confirmed"
+    },
+    {
+      "id": "3",
+      "tableNumber": 3,
+      "status": "not_reserved"
+    },
+    {
+      "id": "4",
+      "tableNumber": 4,
+      "status": "not_reserved"
+    },
+    {
+      "id": "5",
+      "tableNumber": 5,
+      "status": "not_reserved"
+    },
+    {
+      "id": "6",
+      "tableNumber": 6,
+      "status": "not_reserved"
+    },
+    {
+      "id": "7",
+      "tableNumber": 7,
+      "status": "not_reserved"
+    },
+    {
+      "id": "8",
+      "tableNumber": 8,
+      "status": "not_reserved"
+    },
+    {
+      "id": "9",
+      "tableNumber": 9,
+      "status": "not_reserved"
+    },
+    {
+      "id": "10",
+      "tableNumber": 10,
+      "status": "not_reserved"
+    }
+  ]
+}
