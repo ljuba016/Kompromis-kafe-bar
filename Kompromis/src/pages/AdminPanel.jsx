@@ -52,10 +52,10 @@ const AdminPanel = () => {
         );
         setMenuItems([...menuItems, response.data]);
       }
-      alert("Sacuvan artikal u meniju!");
+      alert("Sačuvan artikal u meniju!");
     } catch (error) {
-      alert("Greska pri cuvanju artikla.");
-      console.error("Greska pri cuvanju artikla:", error);
+      alert("Greška pri čuvanju artikla.");
+      console.error("Greška pri čuvanju artikla:", error);
     }
   };
 
@@ -65,8 +65,8 @@ const AdminPanel = () => {
       setMenuItems(menuItems.filter((item) => item.id !== id));
       alert("Obrisan artikal sa menija!");
     } catch (error) {
-      alert("Greska pri brisanju artikla.");
-      console.error("Greska brisanja artikla:", error);
+      alert("Greška pri brisanju artikla.");
+      console.error("Greška brisanja artikla:", error);
     }
   };
 
@@ -92,10 +92,10 @@ const AdminPanel = () => {
           res.id === reservation.id ? { ...res, status: "confirmed" } : res
         )
       );
-      alert("Rezervacija potvrdjena!");
+      alert("Rezervacija potvrđena!");
     } catch (error) {
-      alert("Greska pri potvrdjivanju rezervacije.");
-      console.error("Greska potvrdjivanja rezervacije:", error);
+      alert("Greška pri potvrđivanju rezervacije.");
+      console.error("Greška potvrđivanja rezervacije:", error);
     }
   };
 
@@ -118,16 +118,16 @@ const AdminPanel = () => {
       setReservations(reservations.filter((res) => res.id !== reservation.id));
       alert("Rezervacija otkazana!");
     } catch (error) {
-      alert("Greska pri otkazivanju rezervacije.");
-      console.error("Greska otkazivanja rezervacije:", error);
+      alert("Greška pri otkazivanju rezervacije.");
+      console.error("Greška otkazivanja rezervacije:", error);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <h2 className="text-2xl font-bold mb-4">Admin Panel</h2>
+    <div className="min-h-screen p-4" style={{ backgroundColor: "#129a5c" }}>
+      <h2 className="text-2xl font-bold mb-4 text-black">Admin Panel</h2>
 
-      <h3 className="text-xl font-bold mb-2">Manage Menu</h3>
+      <h3 className="text-xl font-bold mb-2 text-black">Manage Menu</h3>
       <Formik
         initialValues={
           editingItem || { name: "", description: "", price: "", category: "" }
@@ -136,8 +136,11 @@ const AdminPanel = () => {
         onSubmit={handleSubmit}
         enableReinitialize
       >
-        {({ errors, touched }) => (
-          <Form className="bg-white p-4 rounded shadow mb-4">
+        {({ errors, touched, isSubmitting }) => (
+          <Form
+            className="bg-white p-4 rounded shadow-2xl mb-4 bg-[#129a5c]"
+            style={{ backgroundColor: "#f7c00b" }}
+          >
             <div className="space-y-4">
               <div>
                 <Field
@@ -175,6 +178,7 @@ const AdminPanel = () => {
                   as="select"
                   name="category"
                   className="w-full p-2 border rounded"
+                  style={{ backgroundColor: "#f7c00b" }}
                 >
                   <option value="">Izaberite kategoriju</option>
                   <option value="drinks">Pice</option>
@@ -186,81 +190,99 @@ const AdminPanel = () => {
               </div>
               <button
                 type="submit"
-                className="p-2 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-700"
+                disabled={isSubmitting}
+                className={`w-full p-2 rounded text-black transition cursor-pointer ${
+                  isSubmitting
+                    ? "bg-green-300 cursor-not-allowed"
+                    : "bg-[#129a5c] hover:brightness-110"
+                }`}
               >
-                {editingItem ? "Update Item" : "Add Item"}
+                {editingItem
+                  ? isSubmitting
+                    ? "Updating..."
+                    : "Update Item"
+                  : isSubmitting
+                  ? "Adding..."
+                  : "Add Item"}
               </button>
             </div>
           </Form>
         )}
       </Formik>
 
-      <h3 className="text-xl font-bold mb-2">Menu Items</h3>
-      <div className="space-y-4">
-        {menuItems.map((item) => (
-          <div
-            key={item.id}
-            className="bg-white p-4 rounded shadow flex justify-between"
-          >
-            <div>
-              <p>
-                {item.name} - ${item.price}
-              </p>
-              <p>{item.category}</p>
-            </div>
-            <div>
-              <button
-                onClick={() => setEditingItem(item)}
-                className="mr-2 p-2 bg-yellow-500 text-white rounded cursor-pointer hover:bg-yellow-700"
-              >
-                Edituj
-              </button>
-              <button
-                onClick={() => deleteItem(item.id)}
-                className="p-2 bg-red-500 text-white rounded cursor-pointer hover:bg-red-700"
-              >
-                Obrisi
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <h3 className="text-xl font-bold mb-2 mt-4">Reservations</h3>
-      <div className="space-y-4">
-        {reservations.map((reservation) => (
-          <div
-            key={reservation.id}
-            className="bg-white p-4 rounded shadow flex justify-between"
-          >
-            <div>
-              <h3 className="text-lg font-semibold">
-                Sto {reservation.tableNumber}
-              </h3>
-              <p>ID rezervacije: {reservation.id}</p>
-              <p>Korisnik: {reservation.userId.replace("token-", "")}</p>
-              <p>Datum: {reservation.date}</p>
-              <p>vreme: {reservation.time}</p>
-              <p>Status: {reservation.status}</p>
-            </div>
-            <div>
-              {reservation.status === "pending" && (
+      {/* DVOKOLONSKI RASPORED */}
+      <div className="flex flex-col md:flex-row gap-4">
+        {/* Leva kolona - Menu Items */}
+        <div className="w-full md:w-1/2 space-y-4">
+          <h3 className="text-xl font-bold mb-2 text-black">Menu Items</h3>
+          {menuItems.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white p-4 rounded shadow-xl flex justify-between"
+              style={{ backgroundColor: "#f7c00b" }}
+            >
+              <div>
+                <p>
+                  {item.name} - {item.price} RSD
+                </p>
+                <p>{item.category}</p>
+              </div>
+              <div>
                 <button
-                  onClick={() => confirmReservation(reservation)}
-                  className="mr-2 p-2 bg-green-500 text-white rounded hover:bg-green-700 cursor-pointer"
+                  onClick={() => setEditingItem(item)}
+                  className="mr-2 p-2 bg-yellow-600 text-white rounded cursor-pointer hover:bg-yellow-700"
                 >
-                  Potvrdi
+                  Edituj
                 </button>
-              )}
-              <button
-                onClick={() => cancelReservation(reservation)}
-                className="p-2 bg-red-500 text-white rounded hover:bg-red-700 cursor-pointer"
-              >
-                Ponisti
-              </button>
+                <button
+                  onClick={() => deleteItem(item.id)}
+                  className="p-2 bg-red-500 text-white rounded cursor-pointer hover:bg-red-700"
+                >
+                  Obrisi
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+
+        {/* Desna kolona - Reservations */}
+        <div className="w-full md:w-1/2 space-y-4">
+          <h3 className="text-xl font-bold mb-2 text-black">Reservations</h3>
+          {reservations.map((reservation) => (
+            <div
+              key={reservation.id}
+              className="bg-white p-4 rounded shadow-2xl flex justify-between"
+              style={{ backgroundColor: "#f7c00b" }}
+            >
+              <div>
+                <h3 className="text-lg font-semibold">
+                  Sto {reservation.tableNumber}
+                </h3>
+                <p>ID rezervacije: {reservation.id}</p>
+                <p>Korisnik: {reservation.userId.replace("token-", "")}</p>
+                <p>Datum: {reservation.date}</p>
+                <p>Vreme: {reservation.time}</p>
+                <p>Status: {reservation.status}</p>
+              </div>
+              <div>
+                {reservation.status === "pending" && (
+                  <button
+                    onClick={() => confirmReservation(reservation)}
+                    className="mr-2 p-2 bg-green-500 text-white rounded hover:bg-green-700 cursor-pointer"
+                  >
+                    Potvrdi
+                  </button>
+                )}
+                <button
+                  onClick={() => cancelReservation(reservation)}
+                  className="p-2 bg-red-500 text-white rounded hover:bg-red-700 cursor-pointer"
+                >
+                  Ponisti
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

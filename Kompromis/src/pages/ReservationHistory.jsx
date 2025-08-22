@@ -45,14 +45,23 @@ const ReservationHistory = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <h2 className="text-2xl font-bold mb-4">Vasa istorija rezervacija</h2>
+    <div
+      className="min-h-screen bg-gray-100 p-4"
+      style={{ backgroundColor: "#129a5c" }}
+    >
+      <h2 className="text-2xl font-bold mb-4 flex justify-center">
+        Vasa istorija rezervacija
+      </h2>
       {reservations.length === 0 ? (
         <p className="text-gray-600">Nemate rezervaciju.</p>
       ) : (
-        <div className="space-y-4">
+        <div className="flex flex-wrap gap-4">
           {reservations.map((reservation) => (
-            <div key={reservation.id} className="bg-white p-4 rounded shadow">
+            <div
+              key={reservation.id}
+              className="bg-white p-4 rounded shadow w-80"
+              style={{ backgroundColor: "#f7c00b" }}
+            >
               <h3 className="text-lg font-semibold">
                 Sto {reservation.tableNumber}
               </h3>

@@ -11,7 +11,7 @@ const Login = () => {
 
   const loginSchema = Yup.object().shape({
     email: Yup.string()
-      .email("Netacaan format email-a")
+      .email("Netacan format email-a")
       .required("Email je obavezan"),
     password: Yup.string()
       .min(6, "Password mora biti najmanje 6 karaktera")
@@ -19,8 +19,14 @@ const Login = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
+    <div
+      className="min-h-screen bg-gray-100 flex items-center justify-center p-4"
+      style={{ backgroundColor: "#129a5c" }}
+    >
+      <div
+        className="bg-white p-6 rounded shadow-2xl w-full max-w-md"
+        style={{ backgroundColor: "#f7c00b" }}
+      >
         <h2 className="text-2xl font-bold mb-4">Login</h2>
         <Formik
           initialValues={{ email: "", password: "" }}
@@ -74,10 +80,13 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full p-2 rounded text-white ${
-                  isSubmitting
-                    ? "bg-blue-300 cursor-not-allowed"
-                    : "bg-blue-500 hover:bg-blue-600"
+                style={{
+                  backgroundColor: isSubmitting ? "#85c9a2" : "#129a5c",
+                }}
+                className={`w-full p-2 rounded text-black transition ${
+                  !isSubmitting
+                    ? "hover:brightness-110 cursor-pointer"
+                    : "cursor-not-allowed"
                 }`}
               >
                 {isSubmitting ? "Logging in..." : "Login"}

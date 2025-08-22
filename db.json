@@ -52,7 +52,7 @@
       "id": "5",
       "name": "Cedevita",
       "description": "Osvežavajući napitak sa ukusom narandže, limuna ili breskve.",
-      "price": 150,
+      "price": 180,
       "category": "pice",
       "image": "/src/assets/cedevita.png"
     },

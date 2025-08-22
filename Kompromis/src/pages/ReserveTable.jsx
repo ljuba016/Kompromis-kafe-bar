@@ -64,123 +64,133 @@ const ReserveTable = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <h2 className="text-2xl font-bold mb-4">Rezervisite sto</h2>
-      <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
-        <Formik
-          initialValues={{ tableNumber: "", date: "", time: "" }}
-          validationSchema={reservationSchema}
-          onSubmit={async (values, { setSubmitting }) => {
-            try {
-              const tablesResponse = await axios.get(
-                "http://localhost:3001/tables",
-                { params: { tableNumber: parseInt(values.tableNumber) } }
-              );
-
-              if (tablesResponse.data.length === 0) {
-                alert("Sto ne postoji. Molimo izaberite drugi sto.");
-                fetchAvailableTables();
-                return;
-              }
-
-              const table = tablesResponse.data[0];
-              const tableId = table.id;
-
-              const reservationsResponse = await axios.get(
-                "http://localhost:3001/reservations"
-              );
-              const numericIds = reservationsResponse.data
-                .map((r) => parseInt(r.id, 10))
-                .filter((n) => !isNaN(n));
-              const nextId =
-                numericIds.length > 0
-                  ? (Math.max(...numericIds) + 1).toString()
-                  : "1";
-
-              await axios.post("http://localhost:3001/reservations", {
-                id: nextId,
-                userId: user.token,
-                tableNumber: parseInt(values.tableNumber),
-                date: values.date,
-                time: values.time,
-                status: "pending",
-                createdAt: new Date().toISOString(),
-              });
-
-              await axios.patch(`http://localhost:3001/tables/${tableId}`, {
-                status: "pending",
-              });
-
-              alert("Uspesno ste rezervisali sto!");
-              navigate("/reservations");
-            } catch (error) {
-              const errorMessage =
-                error.response?.data?.message || error.message;
-              alert("Neuspesna rezervacija: " + errorMessage);
-              console.error("Reservation error:", error);
-            } finally {
-              setSubmitting(false);
-            }
-          }}
+    <div
+      className="min-h-screen bg-gray-100 p-4 "
+      style={{ backgroundColor: "#129a5c" }}
+    >
+      <h2 className="text-2xl font-bold mb-4 flex justify-center">
+        Rezervisite sto
+      </h2>
+      <div className="flex justify-center items-center h-140 ">
+        <div
+          className="bg-white p-6 rounded shadow-2xl w-full max-w-md"
+          style={{ backgroundColor: "#f7c00b" }}
         >
-          {({ errors, touched }) => (
-            <Form className="space-y-4">
-              <div>
-                <Field
-                  name="date"
-                  type="date"
-                  className="w-full p-2 border rounded"
-                />
-                {errors.date && touched.date && (
-                  <p className="text-red-500">{errors.date}</p>
-                )}
-              </div>
-              <div>
-                <Field
-                  name="time"
-                  type="time"
-                  className="w-full p-2 border rounded"
-                />
-                {errors.time && touched.time && (
-                  <p className="text-red-500">{errors.time}</p>
-                )}
-              </div>
-              <div>
-                <Field
-                  as="select"
-                  name="tableNumber"
-                  className="w-full p-2 border rounded"
-                  disabled={loadingTables}
+          <Formik
+            initialValues={{ tableNumber: "", date: "", time: "" }}
+            validationSchema={reservationSchema}
+            onSubmit={async (values, { setSubmitting }) => {
+              try {
+                const tablesResponse = await axios.get(
+                  "http://localhost:3001/tables",
+                  { params: { tableNumber: parseInt(values.tableNumber) } }
+                );
+
+                if (tablesResponse.data.length === 0) {
+                  alert("Sto ne postoji. Molimo izaberite drugi sto.");
+                  fetchAvailableTables();
+                  return;
+                }
+
+                const table = tablesResponse.data[0];
+                const tableId = table.id;
+
+                const reservationsResponse = await axios.get(
+                  "http://localhost:3001/reservations"
+                );
+                const numericIds = reservationsResponse.data
+                  .map((r) => parseInt(r.id, 10))
+                  .filter((n) => !isNaN(n));
+                const nextId =
+                  numericIds.length > 0
+                    ? (Math.max(...numericIds) + 1).toString()
+                    : "1";
+
+                await axios.post("http://localhost:3001/reservations", {
+                  id: nextId,
+                  userId: user.token,
+                  tableNumber: parseInt(values.tableNumber),
+                  date: values.date,
+                  time: values.time,
+                  status: "pending",
+                  createdAt: new Date().toISOString(),
+                });
+
+                await axios.patch(`http://localhost:3001/tables/${tableId}`, {
+                  status: "pending",
+                });
+
+                alert("Uspesno ste rezervisali sto!");
+                navigate("/reservations");
+              } catch (error) {
+                const errorMessage =
+                  error.response?.data?.message || error.message;
+                alert("Neuspesna rezervacija: " + errorMessage);
+                console.error("Reservation error:", error);
+              } finally {
+                setSubmitting(false);
+              }
+            }}
+          >
+            {({ errors, touched }) => (
+              <Form className="space-y-4">
+                <div>
+                  <Field
+                    name="date"
+                    type="date"
+                    className="w-full p-2 border rounded"
+                  />
+                  {errors.date && touched.date && (
+                    <p className="text-red-500">{errors.date}</p>
+                  )}
+                </div>
+                <div>
+                  <Field
+                    name="time"
+                    type="time"
+                    className="w-full p-2 border rounded"
+                  />
+                  {errors.time && touched.time && (
+                    <p className="text-red-500">{errors.time}</p>
+                  )}
+                </div>
+                <div>
+                  <Field
+                    as="select"
+                    name="tableNumber"
+                    className="w-full p-2 border rounded"
+                    disabled={loadingTables}
+                  >
+                    <option value="">Select a table</option>
+                    {availableTables.map((table) => (
+                      <option key={table} value={table}>
+                        Table {table}
+                      </option>
+                    ))}
+                  </Field>
+                  {errors.tableNumber && touched.tableNumber && (
+                    <p className="text-red-500">{errors.tableNumber}</p>
+                  )}
+                  {loadingTables && (
+                    <p className="text-gray-500">Loading available tables...</p>
+                  )}
+                  {error && <p className="text-red-500">{error}</p>}
+                </div>
+                <button
+                  type="submit"
+                  disabled={loadingTables || availableTables.length === 0}
+                  className={`w-full p-2 rounded text-black ${
+                    loadingTables || availableTables.length === 0
+                      ? "bg-green-300 cursor-not-allowed"
+                      : "bg-green-500 hover:bg-green-600 cursor-pointer"
+                  }`}
                 >
-                  <option value="">Select a table</option>
-                  {availableTables.map((table) => (
-                    <option key={table} value={table}>
-                      Table {table}
-                    </option>
-                  ))}
-                </Field>
-                {errors.tableNumber && touched.tableNumber && (
-                  <p className="text-red-500">{errors.tableNumber}</p>
-                )}
-                {loadingTables && (
-                  <p className="text-gray-500">Loading available tables...</p>
-                )}
-                {error && <p className="text-red-500">{error}</p>}
-              </div>
-              <button
-                type="submit"
-                disabled={loadingTables || availableTables.length === 0}
-                className={`w-full p-2 rounded text-white ${
-                  loadingTables || availableTables.length === 0
-                    ? "bg-green-300 cursor-not-allowed"
-                    : "bg-green-500 hover:bg-green-600 cursor-pointer"
-                }`}
-              >
-                {loadingTables ? "Loading..." : "Potvrdi rezervaciju"}
-              </button>
-            </Form>
-          )}
-        </Formik>
+                  {loadingTables ? "Loading..." : "Potvrdi rezervaciju"}
+                </button>
+              </Form>
+            )}
+          </Formik>
+        </div>
       </div>
     </div>
   );

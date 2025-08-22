@@ -15,8 +15,14 @@ const Register = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
+    <div
+      className="min-h-screen bg-gray-100 flex items-center justify-center p-4"
+      style={{ backgroundColor: "#129a5c" }}
+    >
+      <div
+        className="bg-white p-6 rounded shadow-md w-full max-w-md"
+        style={{ backgroundColor: "#f7c00b" }}
+      >
         <h2 className="text-2xl font-bold mb-4">Register</h2>
         <Formik
           initialValues={{ username: "", email: "", password: "" }}
@@ -55,7 +61,7 @@ const Register = () => {
                 <Field
                   name="username"
                   placeholder="Username"
-                  className="w-full p-2 border rounded"
+                  className="w-full p-2 border rounded "
                 />
                 {errors.username && touched.username && (
                   <p className="text-red-500">{errors.username}</p>
@@ -85,7 +91,8 @@ const Register = () => {
               </div>
               <button
                 type="submit"
-                className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                className="w-full text-black p-2 rounded hover:brightness-110 cursor-pointer"
+                style={{ backgroundColor: "#129a5c" }}
               >
                 Register
               </button>
